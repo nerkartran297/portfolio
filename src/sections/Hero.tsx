@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Section from "../components/Section";
 import Reveal from "../components/Reveal";
+import ProfileFrame from "../components/ProfileFrame";
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
@@ -95,24 +96,7 @@ export default function Hero() {
               className="transition-transform duration-200 ease-out"
             >
               {/* abstract “art” placeholder */}
-              <div className="card relative overflow-hidden p-4">
-                <div className="aspect-square rounded-2xl border hairline bg-white/5 relative">
-                  {/* gradient wash */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[rgba(74,210,255,0.25)] via-transparent to-[rgba(255,87,179,0.20)]" />
-
-                  {/* inner lens */}
-                  <div className="absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border hairline bg-[rgba(255,255,255,0.04)] backdrop-blur-sm" />
-
-                  {/* tiny stars */}
-                  <div className="absolute left-8 top-8 h-2 w-2 rounded-full bg-white/60" />
-                  <div className="absolute right-10 bottom-10 h-2 w-2 rounded-full bg-white/60" />
-                </div>
-
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="muted2 text-sm">Featured Visual</div>
-                  <div className="label text-[10px]">01</div>
-                </div>
-              </div>
+              <ProfileFrame src="/profile.jpg"/>
             </div>
           </Reveal>
         </div>
