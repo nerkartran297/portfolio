@@ -69,7 +69,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            backgroundColor: "rgba(10, 18, 40, 0.52)",
+            backgroundColor: "rgba(10, 18, 40, 1)",
             borderColor: "rgba(255, 255, 255, 0.10)",
             "& fieldset": {
               borderColor: "rgba(255, 255, 255, 0.12)",
@@ -183,6 +183,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "rgba(10, 18, 40, 1)",
+          backgroundImage: "none",
+        },
+      },
+    },
   },
 });
 
@@ -229,7 +237,7 @@ const lightTheme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            backgroundColor: "rgba(255, 255, 255, 0.68)",
+            backgroundColor: "rgba(255, 255, 255, 1)",
             borderColor: "rgba(18, 22, 32, 0.08)",
             "& fieldset": {
               borderColor: "rgba(18, 22, 32, 0.12)",
@@ -351,12 +359,21 @@ const lightTheme = createTheme({
         },
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "rgba(255, 255, 255, 1)",
+          backgroundImage: "none",
+        },
+      },
+    },
   },
 });
 
 export function MuiThemeProvider({ children }: PropsWithChildren) {
   const [isLight, setIsLight] = useState(
-    typeof window !== "undefined" && document.documentElement.classList.contains("light")
+    typeof window !== "undefined" &&
+      document.documentElement.classList.contains("light")
   );
 
   useEffect(() => {
@@ -372,6 +389,9 @@ export function MuiThemeProvider({ children }: PropsWithChildren) {
     return () => observer.disconnect();
   }, []);
 
-  return <ThemeProvider theme={isLight ? lightTheme : theme}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={isLight ? lightTheme : theme}>
+      {children}
+    </ThemeProvider>
+  );
 }
-

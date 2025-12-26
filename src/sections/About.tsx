@@ -13,7 +13,7 @@ export default function About() {
             <h2 className="title-serif text-3xl md:text-4xl">
               A simple story,
               <br />
-              built with taste.
+              built with passion.
             </h2>
           </Reveal>
         </div>
@@ -22,8 +22,11 @@ export default function About() {
           <Reveal delayMs={140}>
             <div className="card p-6 md:p-8">
               <p className="muted leading-relaxed">
-              With a passion for programming, I’m a disciplined and detail-oriented third-year college student at UIT-HCM VNU that hope to make life more convenient with apps and automation.
-              Currently, I'm working on a project called "XYZ Project" to help me learn more about programming and build my own projects.
+                With a passion for programming, I’m a disciplined and
+                detail-oriented final-year college student at UIT-HCM VNU that
+                hope to make life more convenient with apps and automation. With
+                a belief in the convenience of UI/UX, I'm always looking for
+                ways to improve the user experience.
               </p>
 
               <div className="mt-6 grid gap-3 md:grid-cols-2">
@@ -33,7 +36,10 @@ export default function About() {
                   "Scroll-based animation",
                   "Responsive layout",
                 ].map((t) => (
-                  <div key={t} className="rounded-xl border hairline bg-white/5 px-4 py-3 text-sm text-white/80">
+                  <div
+                    key={t}
+                    className="rounded-xl border hairline bg-white/5 px-4 py-3 text-sm text-white/80"
+                  >
                     {t}
                   </div>
                 ))}

@@ -20,7 +20,7 @@ export default function Hero() {
       const r = el.getBoundingClientRect();
       // r.top: 0 khi section chạm top, âm khi kéo xuống
       // map từ [-vh .. 0] -> [1..0] để tạo cảm giác bay nhẹ
-      const t = clamp((-r.top) / window.innerHeight, 0, 1);
+      const t = clamp(-r.top / window.innerHeight, 0, 1);
 
       // độ parallax (px) – nhẹ thôi để cinematic
       const y = t * 28; // 0 -> 28px
@@ -55,16 +55,15 @@ export default function Hero() {
 
           <Reveal delayMs={80}>
             <h1 className="title-serif text-4xl leading-tight md:text-6xl">
-              Crafting clean UI
+              Master yourself
               <br />
-              with cinematic motion.
+              Master the enemy
             </h1>
           </Reveal>
 
           <Reveal delayMs={160}>
             <p className="muted mt-6 max-w-md leading-relaxed">
-              Scroll-driven sections, subtle reveals, dark editorial aesthetic inspired by
-              generative art.
+              Hard work, discipline, and a little bit of luck.
             </p>
           </Reveal>
 
@@ -96,7 +95,7 @@ export default function Hero() {
               className="transition-transform duration-200 ease-out"
             >
               {/* abstract “art” placeholder */}
-              <ProfileFrame src="/profile.jpg"/>
+              <ProfileFrame src="/profile.jpg" />
             </div>
           </Reveal>
         </div>

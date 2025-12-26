@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Section from "../components/Section";
 import Reveal from "../components/Reveal";
 
-const EMAIL = "kane.tran@example.com";
+const EMAIL = "ktran@s5tech.co";
 const LOCATION = "Ho Chi Minh City, Vietnam";
 
 type Channel = {
@@ -25,14 +25,14 @@ const CHANNELS: Channel[] = [
     idx: "02",
     title: "GitHub",
     desc: "Code, experiments, and technical notes.",
-    href: "https://github.com/",
+    href: "https://github.com/nerkartran297",
     meta: "github.com",
   },
   {
     idx: "03",
     title: "LinkedIn",
     desc: "Professional profile and work history.",
-    href: "https://linkedin.com/",
+    href: "https://www.linkedin.com/in/nerkar297/",
     meta: "linkedin.com",
   },
 ];
@@ -68,11 +68,7 @@ export default function Contact() {
     animRef.current = null;
   };
 
-  const animateScrollTo = (
-    el: HTMLElement,
-    to: number,
-    duration = 200 
-  ) => {
+  const animateScrollTo = (el: HTMLElement, to: number, duration = 200) => {
     cancelAnim();
 
     const start = el.scrollTop;
@@ -130,7 +126,7 @@ export default function Contact() {
     };
 
     vp.addEventListener("wheel", onWheel, { passive: false });
-    return () => vp.removeEventListener("wheel", onWheel as any);
+    return () => vp.removeEventListener("wheel", onWheel);
   }, [maxIdx]);
 
   // If user scrolls (trackpad / touch), magnet to nearest centered item when they stop
@@ -214,8 +210,7 @@ export default function Contact() {
 
         <Reveal delayMs={140}>
           <p className="muted mt-6 max-w-xl leading-relaxed">
-            Hover the channel list and scroll — it will magnetically snap so the
-            active channel stays centered.
+            Feel free to contact me through the channels below.
           </p>
         </Reveal>
       </div>
@@ -226,7 +221,7 @@ export default function Contact() {
         <div
           className="pointer-events-none absolute hidden md:block w-px"
           style={{
-            left: "36.6%", 
+            left: "36.6%",
             top: -120,
             bottom: -120,
             background:
@@ -253,12 +248,14 @@ export default function Contact() {
 
                 <div className="mt-6 text-sm text-white/70 leading-relaxed">
                   Active channel
-                  <div className="mt-2 text-white/85">{CHANNELS[active]?.title}</div>
+                  <div className="mt-2 text-white/85">
+                    {CHANNELS[active]?.title}
+                  </div>
                 </div>
-
+                {/* 
                 <div className="mt-6 text-xs text-white/45">
                   Tip: Hover right side, use wheel. (↑/↓ also works)
-                </div>
+                </div> */}
               </div>
             </Reveal>
           </div>
@@ -300,7 +297,10 @@ export default function Contact() {
                       onFocus={() => setActive(i)}
                       data-channel={i}
                     >
-                      <div className="relative" style={{ paddingLeft: CONTENT_LEFT_PAD }}>
+                      <div
+                        className="relative"
+                        style={{ paddingLeft: CONTENT_LEFT_PAD }}
+                      >
                         {/* node aligned with spine */}
                         <div
                           className="absolute"
@@ -334,12 +334,18 @@ export default function Contact() {
                           <div className="flex items-start justify-between gap-6">
                             <div>
                               <div className="label mb-2">{c.idx}</div>
-                              <h3 className="text-xl font-semibold">{c.title}</h3>
-                              <p className="muted mt-3 leading-relaxed">{c.desc}</p>
+                              <h3 className="text-xl font-semibold">
+                                {c.title}
+                              </h3>
+                              <p className="muted mt-3 leading-relaxed">
+                                {c.desc}
+                              </p>
                             </div>
 
                             <div className="text-right">
-                              <div className="text-xs text-white/45">Channel</div>
+                              <div className="text-xs text-white/45">
+                                Channel
+                              </div>
                               <div className="mt-2 text-sm text-white/80 group-hover:text-white transition">
                                 {c.meta} →
                               </div>
@@ -368,7 +374,6 @@ export default function Contact() {
           </Reveal>
         </div>
       </div>
-
     </Section>
   );
 }

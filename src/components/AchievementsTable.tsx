@@ -39,7 +39,10 @@ type Props = {
   onFiltersChange: (updates: Partial<Filters>) => void;
 };
 
-const titleSchema = z.string().min(1, "Title is required").max(200, "Title too long");
+const titleSchema = z
+  .string()
+  .min(1, "Title is required")
+  .max(200, "Title too long");
 const tagsSchema = z.array(z.string().min(1)).max(10, "Too many tags");
 
 export default function AchievementsTable({ filters, onFiltersChange }: Props) {
@@ -48,7 +51,10 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingField, setEditingField] = useState<string | null>(null);
   const [editValue, setEditValue] = useState<string>("");
-  const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; id: string | null }>({
+  const [deleteDialog, setDeleteDialog] = useState<{
+    open: boolean;
+    id: string | null;
+  }>({
     open: false,
     id: null,
   });
@@ -78,11 +84,15 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
     // Date range
     if (filters.from) {
       const fromDate = dayjs(filters.from);
-      result = result.filter((a) => dayjs(a.createdAt).isAfter(fromDate.subtract(1, "day")));
+      result = result.filter((a) =>
+        dayjs(a.createdAt).isAfter(fromDate.subtract(1, "day"))
+      );
     }
     if (filters.to) {
       const toDate = dayjs(filters.to);
-      result = result.filter((a) => dayjs(a.createdAt).isBefore(toDate.add(1, "day")));
+      result = result.filter((a) =>
+        dayjs(a.createdAt).isBefore(toDate.add(1, "day"))
+      );
     }
 
     // Tags filter
@@ -112,7 +122,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
     } else if (field === "createdAt") {
       setEditValue(achievement.createdAt);
     } else {
-      setEditValue(achievement[field as keyof Achievement] as string || "");
+      setEditValue((achievement[field as keyof Achievement] as string) || "");
     }
   };
 
@@ -121,7 +131,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
     if (!editingField) return;
 
     try {
-      let updateData: Partial<Achievement> = { id };
+      const updateData: Partial<Achievement> & { id: string } = { id };
 
       if (editingField === "title") {
         const validated = titleSchema.parse(editValue);
@@ -135,13 +145,6 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
           .filter(Boolean);
         const validated = tagsSchema.parse(tagsArray);
         updateData.tags = validated;
-      } else if (editingField === "createdAt") {
-        const date = dayjs(editValue);
-        if (!date.isValid()) {
-          toast.error("Invalid date format");
-          return;
-        }
-        updateData.createdAt = date.toISOString();
       }
 
       dispatch(update(updateData));
@@ -151,7 +154,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
       setEditValue("");
     } catch (error) {
       if (error instanceof z.ZodError) {
-        toast.error(error.errors[0].message);
+        toast.error(error.issues[0]?.message || "Validation error");
       } else {
         toast.error("Failed to update achievement");
       }
@@ -181,6 +184,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
           placeholder="Search..."
           value={filters.q}
           onChange={(e) => onFiltersChange({ q: e.target.value, page: 1 })}
+          fullWidth
         />
 
         <Autocomplete
@@ -188,8 +192,12 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
           size="small"
           options={allTags}
           value={filters.tags ? filters.tags.split(",") : []}
-          onChange={(_, value) => onFiltersChange({ tags: value.join(","), page: 1 })}
-          renderInput={(params) => <TextField {...params} placeholder="Tags" />}
+          onChange={(_, value) =>
+            onFiltersChange({ tags: value.join(","), page: 1 })
+          }
+          renderInput={(params) => (
+            <TextField {...params} placeholder="Tags" fullWidth />
+          )}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <Chip
@@ -200,6 +208,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
               />
             ))
           }
+          fullWidth
         />
 
         <DatePicker
@@ -208,7 +217,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
           onChange={(date: Dayjs | null) =>
             onFiltersChange({ from: date?.toISOString() || null, page: 1 })
           }
-          slotProps={{ textField: { size: "small" } }}
+          slotProps={{ textField: { size: "small", fullWidth: true } }}
         />
 
         <DatePicker
@@ -217,7 +226,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
           onChange={(date: Dayjs | null) =>
             onFiltersChange({ to: date?.toISOString() || null, page: 1 })
           }
-          slotProps={{ textField: { size: "small" } }}
+          slotProps={{ textField: { size: "small", fullWidth: true } }}
         />
 
         <TextField
@@ -225,10 +234,13 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
           size="small"
           label="Per Page"
           value={filters.pageSize}
-          onChange={(e) => onFiltersChange({ pageSize: Number(e.target.value), page: 1 })}
+          onChange={(e) =>
+            onFiltersChange({ pageSize: Number(e.target.value), page: 1 })
+          }
           SelectProps={{
             native: true,
           }}
+          fullWidth
         >
           <option value={5}>5</option>
           <option value={10}>10</option>
@@ -242,12 +254,14 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Tags</TableCell>
-              <TableCell>Created At</TableCell>
-              <TableCell>Updated At</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell style={{ width: 200 }}>Title</TableCell>
+              <TableCell style={{ width: 300 }}>Description</TableCell>
+              <TableCell style={{ width: 200 }}>Tags</TableCell>
+              <TableCell style={{ width: 120 }}>Created</TableCell>
+              <TableCell style={{ width: 120 }}>Updated</TableCell>
+              <TableCell align="right" style={{ width: 100 }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -263,9 +277,10 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
                   {/* Title */}
                   <TableCell
                     onClick={() => startEdit(achievement, "title")}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", width: 200 }}
                   >
-                    {editingId === achievement.id && editingField === "title" ? (
+                    {editingId === achievement.id &&
+                    editingField === "title" ? (
                       <TextField
                         size="small"
                         value={editValue}
@@ -276,6 +291,27 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
                           if (e.key === "Escape") cancelEdit();
                         }}
                         autoFocus
+                        variant="standard"
+                        slotProps={{
+                          input: {
+                            sx: {
+                              padding: 0,
+                              fontSize: "inherit",
+                              fontFamily: "inherit",
+                              lineHeight: "inherit",
+                              "&::before": { display: "none" },
+                              "&::after": { display: "none" },
+                            },
+                          },
+                        }}
+                        sx={{
+                          margin: "auto 0",
+                          "& .MuiInputBase-root": {
+                            padding: 0,
+                            "&::before": { display: "none" },
+                            "&::after": { display: "none" },
+                          },
+                        }}
                       />
                     ) : (
                       achievement.title
@@ -285,9 +321,10 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
                   {/* Description */}
                   <TableCell
                     onClick={() => startEdit(achievement, "description")}
-                    style={{ cursor: "pointer", maxWidth: 300 }}
+                    style={{ cursor: "pointer", width: 300 }}
                   >
-                    {editingId === achievement.id && editingField === "description" ? (
+                    {editingId === achievement.id &&
+                    editingField === "description" ? (
                       <TextField
                         size="small"
                         multiline
@@ -299,6 +336,38 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
                           if (e.key === "Escape") cancelEdit();
                         }}
                         autoFocus
+                        variant="standard"
+                        slotProps={{
+                          input: {
+                            sx: {
+                              padding: 0,
+                              fontSize: "inherit",
+                              fontFamily: "inherit",
+                              lineHeight: "inherit",
+                              color: "rgba(235, 242, 255, 0.56)",
+                              "&::before": { display: "none" },
+                              "&::after": { display: "none" },
+                            },
+                          },
+                        }}
+                        sx={{
+                          margin: "auto 0",
+                          width: "100%",
+                          "& .MuiInputBase-root": {
+                            padding: 0,
+                            "&::before": { display: "none" },
+                            "&::after": { display: "none" },
+                          },
+                          "& .MuiInputBase-input": {
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            "&::-webkit-scrollbar": {
+                              display: "none",
+                            },
+                            scrollbarWidth: "none",
+                            msOverflowStyle: "none",
+                          },
+                        }}
                       />
                     ) : (
                       <span className="muted2">
@@ -308,7 +377,7 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
                   </TableCell>
 
                   {/* Tags */}
-                  <TableCell>
+                  <TableCell style={{ width: 200 }}>
                     {editingId === achievement.id && editingField === "tags" ? (
                       <TextField
                         size="small"
@@ -321,6 +390,27 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
                         }}
                         placeholder="Comma-separated tags"
                         autoFocus
+                        variant="standard"
+                        slotProps={{
+                          input: {
+                            sx: {
+                              padding: 0,
+                              fontSize: "inherit",
+                              fontFamily: "inherit",
+                              lineHeight: "inherit",
+                              "&::before": { display: "none" },
+                              "&::after": { display: "none" },
+                            },
+                          },
+                        }}
+                        sx={{
+                          margin: "auto 0",
+                          "& .MuiInputBase-root": {
+                            padding: 0,
+                            "&::before": { display: "none" },
+                            "&::after": { display: "none" },
+                          },
+                        }}
                       />
                     ) : (
                       <div
@@ -340,39 +430,24 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
                   </TableCell>
 
                   {/* Created At */}
-                  <TableCell
-                    onClick={() => startEdit(achievement, "createdAt")}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {editingId === achievement.id && editingField === "createdAt" ? (
-                      <DatePicker
-                        value={dayjs(editValue)}
-                        onChange={(date: Dayjs | null) => {
-                          if (date) {
-                            setEditValue(date.toISOString());
-                            saveEdit(achievement.id);
-                          }
-                        }}
-                        slotProps={{ textField: { size: "small" } }}
-                        autoFocus
-                      />
-                    ) : (
-                      dayjs(achievement.createdAt).format("MMM DD, YYYY")
-                    )}
+                  <TableCell style={{ width: 120 }}>
+                    {dayjs(achievement.createdAt).format("MMM DD YYYY")}
                   </TableCell>
 
                   {/* Updated At */}
-                  <TableCell>
+                  <TableCell style={{ width: 120 }}>
                     {achievement.updatedAt
-                      ? dayjs(achievement.updatedAt).format("MMM DD, YYYY")
+                      ? dayjs(achievement.updatedAt).format("MMM DD YYYY")
                       : "—"}
                   </TableCell>
 
                   {/* Actions */}
-                  <TableCell align="right">
+                  <TableCell align="right" style={{ width: 100 }}>
                     <IconButton
                       size="small"
-                      onClick={() => setDeleteDialog({ open: true, id: achievement.id })}
+                      onClick={() =>
+                        setDeleteDialog({ open: true, id: achievement.id })
+                      }
                       className="text-white/70 hover:text-white"
                     >
                       <DeleteIcon fontSize="small" />
@@ -405,4 +480,3 @@ export default function AchievementsTable({ filters, onFiltersChange }: Props) {
     </LocalizationProvider>
   );
 }
-

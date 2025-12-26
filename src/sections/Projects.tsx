@@ -5,27 +5,31 @@ type Project = {
   title: string;
   description: string;
   tags: string[];
+  url: string;
 };
 
 const PROJECTS: Project[] = [
   {
-    title: "Classroom Realtime Manager",
+    title: "Classroom Manager",
     description:
-      "A web-based classroom management system with real-time test results and analytics designed for teachers.",
-    tags: ["React", "TypeScript", "WebSocket", "MongoDB"],
+      "A web-based classroom management system with real-time test results and analytics designed for teachers. Allowing teachers to create and manage classes, tests, and view test results and analytics.",
+    tags: ["React", "TypeScript", "TailwindCSS", "MongoDB"],
+    url: "https://toanthaybien.com",
   },
   {
-    title: "Mini Realtime Games",
+    title: "DevForum Website",
     description:
-      "A collection of simple PvP web games focusing on real-time synchronization, timing, and performance.",
-    tags: ["React", "Canvas", "WebSocket"],
+      "A forum website built with Next.js, TailwindCSS, and TypeScript. It allows users to write posts and comments, and like/dislike them.",
+    tags: ["Next.js", "TailwindCSS", "TypeScript"],
+    url: "https://www.make1move.net/",
   },
   {
-    title: "AI Demo Hub",
+    title: "Microservices Elearning Platform",
     description:
-      "A frontend platform for showcasing AI/ML demos with a clean UI and reusable layout system.",
-    tags: ["React", "TypeScript", "UI Engineering"],
-  }
+      "A microservices e-learning platform built with React, TypeScript, and TailwindCSS. It allows users to create and manage courses, lessons, and quizzes, and view course progress and analytics.",
+    tags: ["React", "TypeScript", "TailwindCSS", "Docker", "RabitMQ"],
+    url: "https://github.com/nerkartran297/elearn-da2",
+  },
 ];
 
 export default function Projects() {
@@ -38,9 +42,7 @@ export default function Projects() {
         </Reveal>
 
         <Reveal delayMs={80}>
-          <h2 className="title-serif text-3xl md:text-4xl">
-            Selected Works
-          </h2>
+          <h2 className="title-serif text-3xl md:text-4xl">Selected Works</h2>
         </Reveal>
 
         <Reveal delayMs={140}>
@@ -56,15 +58,13 @@ export default function Projects() {
         {PROJECTS.map((project, idx) => (
           <Reveal
             key={project.title}
-            delayMs={idx * 90}          // 👈 STAGGER Ở ĐÂY
+            delayMs={idx * 90} // 👈 STAGGER Ở ĐÂY
             className="md:col-span-4"
           >
             <article className="card p-6 md:p-7 h-full flex flex-col">
               {/* header */}
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">
-                  {project.title}
-                </h3>
+                <h3 className="text-lg font-semibold">{project.title}</h3>
                 <span className="label text-[10px]">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
@@ -90,10 +90,12 @@ export default function Projects() {
               {/* action */}
               <div className="mt-6">
                 <a
-                  href="#"
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm text-white/80 hover:text-white underline decoration-white/20 underline-offset-4"
                 >
-                  View case →
+                  View project →
                 </a>
               </div>
             </article>

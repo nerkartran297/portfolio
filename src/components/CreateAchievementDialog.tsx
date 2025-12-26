@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
@@ -18,7 +18,7 @@ import { create } from "../store/achievementsSlice";
 const schema = z.object({
   title: z.string().min(1, "Title is required").max(200, "Title too long"),
   description: z.string().max(1000, "Description too long").optional(),
-  tags: z.array(z.string().min(1)).max(10, "Too many tags").default([]),
+  tags: z.array(z.string().min(1)).max(10, "Too many tags"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -35,7 +35,7 @@ export default function CreateAchievementDialog({ open, onClose }: Props) {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
+    control,
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -46,7 +46,7 @@ export default function CreateAchievementDialog({ open, onClose }: Props) {
     },
   });
 
-  const tags = watch("tags");
+  const tags = useWatch({ control, name: "tags" });
 
   const onSubmit = (data: FormData) => {
     dispatch(create(data));
@@ -84,7 +84,9 @@ export default function CreateAchievementDialog({ open, onClose }: Props) {
             freeSolo
             options={[]}
             value={tags}
-            onChange={(_, value) => setValue("tags", value, { shouldValidate: true })}
+            onChange={(_, value) =>
+              setValue("tags", value, { shouldValidate: true })
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -96,7 +98,12 @@ export default function CreateAchievementDialog({ open, onClose }: Props) {
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <Chip {...getTagProps({ index })} key={option} label={option} size="small" />
+                <Chip
+                  {...getTagProps({ index })}
+                  key={option}
+                  label={option}
+                  size="small"
+                />
               ))
             }
           />
@@ -113,4 +120,3 @@ export default function CreateAchievementDialog({ open, onClose }: Props) {
     </Dialog>
   );
 }
-
