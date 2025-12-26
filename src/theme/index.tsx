@@ -69,7 +69,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            backgroundColor: "rgba(10, 18, 40, 1)",
+            backgroundColor: "transparent",
             borderColor: "rgba(255, 255, 255, 0.10)",
             "& fieldset": {
               borderColor: "rgba(255, 255, 255, 0.12)",
@@ -237,7 +237,7 @@ const lightTheme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            backgroundColor: "rgba(255, 255, 255, 1)",
+            backgroundColor: "transparent",
             borderColor: "rgba(18, 22, 32, 0.08)",
             "& fieldset": {
               borderColor: "rgba(18, 22, 32, 0.12)",
