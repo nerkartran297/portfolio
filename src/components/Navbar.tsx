@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useTheme } from "../hooks/useTheme";
 
@@ -22,6 +23,8 @@ type Indicator = { x: number; y: number; w: number; h: number };
 export default function Navbar() {
   const activeId = useActiveSection(SECTIONS.map((s) => s.id));
   const { isLight, toggleTheme } = useTheme();
+  const location = useLocation();
+  const isAchievementsPage = location.pathname === "/achievements";
 
   const navRef = useRef<HTMLElement | null>(null);
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -81,7 +84,8 @@ export default function Navbar() {
           </button>
 
           {/* Desktop nav */}
-          <nav ref={navRef} className="relative hidden items-center gap-2 md:flex">
+          {!isAchievementsPage && (
+            <nav ref={navRef} className="relative hidden items-center gap-2 md:flex">
             {/* Nền trắng dạng pill (trượt mượt) */}
             {indicator && (
               <span
@@ -113,7 +117,8 @@ export default function Navbar() {
                 {s.label}
               </button>
             ))}
-          </nav>
+            </nav>
+          )}
 
           <div className="flex items-center gap-3">
             {/* Theme toggle */}
@@ -159,12 +164,29 @@ export default function Navbar() {
               )}
             </button>
 
-            <a
-              href="#contact"
-              className="rounded-xl border hairline px-4 py-2 text-xs tracking-[0.24em] text-white/80 hover:bg-white/10"
-            >
-              LET&apos;S TALK
-            </a>
+            {isAchievementsPage ? (
+              <Link
+                to="/"
+                className="rounded-xl border hairline px-4 py-2 text-xs tracking-[0.24em] text-white/80 hover:bg-white/10"
+              >
+                BACK HOME
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/achievements"
+                  className="rounded-xl border hairline px-4 py-2 text-xs tracking-[0.24em] text-white/80 hover:bg-white/10"
+                >
+                  ACHIEVEMENTS
+                </Link>
+                <a
+                  href="#contact"
+                  className="rounded-xl border hairline px-4 py-2 text-xs tracking-[0.24em] text-white/80 hover:bg-white/10"
+                >
+                  LET&apos;S TALK
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>
