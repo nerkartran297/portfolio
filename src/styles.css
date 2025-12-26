@@ -216,5 +216,288 @@ body {
   .no-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
   }
+}
 
+/* =========================
+   LIGHT MODE OVERRIDES
+   (Only active when html.light class exists)
+   ========================= */
+html.light {
+  /* Light mode color tokens override */
+  --bg0: 248, 249, 252;     /* mist / paper gray */
+  --bg1: 242, 244, 248;     /* slightly darker paper */
+  --card: 255, 255, 255;    /* pure white for cards */
+
+  --text: 18, 22, 32;       /* ink-like dark */
+  --muted: 65, 75, 95;      /* softer secondary */
+}
+
+html.light body {
+  color: rgb(var(--text));
+  background:
+    radial-gradient(
+      1200px 800px at 50% -10%,
+      rgba(var(--blue), 0.08),
+      rgba(var(--bg1), 0.12) 35%,
+      rgb(var(--bg0)) 70%
+    ),
+    radial-gradient(
+      900px 700px at 12% 28%,
+      rgba(var(--cyan), 0.05),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 700px at 88% 22%,
+      rgba(var(--magenta), 0.04),
+      transparent 60%
+    ),
+    rgb(var(--bg0));
+}
+
+/* Light mode utility overrides */
+html.light .hairline {
+  border-color: rgba(18, 22, 32, 0.12);
+}
+
+html.light .glass {
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(18, 22, 32, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+html.light .card {
+  border-color: rgba(18, 22, 32, 0.10);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.75)
+  );
+  box-shadow:
+    0 14px 44px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html.light .label {
+  color: rgba(18, 22, 32, 0.75);
+}
+
+html.light .muted {
+  color: rgba(var(--text), 0.65);
+}
+
+html.light .muted2 {
+  color: rgba(var(--text), 0.50);
+}
+
+html.light .gridlines {
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(18, 22, 32, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(18, 22, 32, 0.03) 1px,
+      transparent 1px
+    );
+  background-size: 56px 56px;
+  mask-image: radial-gradient(
+    circle at 50% 40%,
+    rgba(0, 0, 0, 0.5),
+    transparent 65%
+  );
+}
+
+html.light .blob {
+  opacity: 0.25;
+  filter: blur(80px);
+}
+
+html.light .grain {
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+
+/* Light mode specific text overrides */
+html.light .text-white\/70,
+html.light .text-white\/80 {
+  color: rgba(var(--text), 0.70) !important;
+}
+
+html.light .text-white\/75 {
+  color: rgba(var(--text), 0.75) !important;
+}
+
+html.light .text-white\/45 {
+  color: rgba(var(--text), 0.45) !important;
+}
+
+html.light .text-white\/30 {
+  color: rgba(var(--text), 0.30) !important;
+}
+
+html.light .hover\:bg-white\/10:hover {
+  background-color: rgba(var(--text), 0.08) !important;
+}
+
+/* Light mode button/input overrides */
+html.light button.text-black,
+html.light a.text-black {
+  color: rgb(var(--bg0)) !important;
+}
+
+html.light .bg-white {
+  background-color: rgb(var(--bg0)) !important;
+}
+
+/* Navbar specific overrides for light mode */
+html.light .glass .text-white\/70,
+html.light .glass .text-white\/80 {
+  color: rgba(var(--text), 0.70) !important;
+}
+
+html.light .glass .hover\:bg-white\/10:hover {
+  background-color: rgba(var(--text), 0.06) !important;
+}
+
+html.light .glass .hover\:text-white:hover {
+  color: rgb(var(--text)) !important;
+}
+
+html.light nav button.text-black {
+  color: rgb(var(--bg0)) !important;
+}
+
+/* ProfileFrame specific light mode adjustments */
+html.light .bg-white\/5 {
+  background-color: rgba(var(--text), 0.03) !important;
+}
+
+html.light .border-white\/10 {
+  border-color: rgba(var(--text), 0.08) !important;
+}
+
+html.light .ring-white\/15 {
+  --tw-ring-color: rgba(var(--text), 0.10) !important;
+}
+
+/* Additional light mode overrides for hardcoded white colors */
+html.light .text-white\/85 {
+  color: rgba(var(--text), 0.85) !important;
+}
+
+html.light .text-white\/60 {
+  color: rgba(var(--text), 0.60) !important;
+}
+
+html.light .bg-white\/8 {
+  background-color: rgba(var(--text), 0.06) !important;
+}
+
+html.light .bg-white\/15 {
+  background-color: rgba(var(--text), 0.12) !important;
+}
+
+html.light .bg-white\/20 {
+  background-color: rgba(var(--text), 0.15) !important;
+}
+
+html.light .bg-white\/90 {
+  background-color: rgba(var(--text), 0.75) !important;
+}
+
+html.light .border-white\/30 {
+  border-color: rgba(var(--text), 0.25) !important;
+}
+
+html.light .border-white\/15 {
+  border-color: rgba(var(--text), 0.12) !important;
+}
+
+html.light .ring-white\/25 {
+  --tw-ring-color: rgba(var(--text), 0.20) !important;
+}
+
+html.light .ring-white\/0 {
+  --tw-ring-color: transparent !important;
+}
+
+html.light .focus\:ring-white\/15:focus {
+  --tw-ring-color: rgba(var(--text), 0.12) !important;
+}
+
+/* ScrollProgress light mode adjustments */
+html.light .bg-white\/10 {
+  background-color: rgba(var(--text), 0.08) !important;
+}
+
+/* Contact section divider in light mode */
+html.light [style*="rgba(255,255,255,0.14)"],
+html.light [style*="rgba(255,255,255,0.08)"] {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(var(--text), 0.10) 12%,
+    rgba(var(--text), 0.06) 88%,
+    transparent
+  ) !important;
+}
+
+/* Spine in Contact section */
+html.light .bg-white\/10[style*="left"] {
+  background-color: rgba(var(--text), 0.08) !important;
+}
+
+/* Divider line in Contact */
+html.light .bg-white\/10.h-px {
+  background-color: rgba(var(--text), 0.08) !important;
+}
+
+/* Projects section tags */
+html.light .bg-white\/5[class*="rounded-full"] {
+  background-color: rgba(var(--text), 0.04) !important;
+}
+
+html.light .text-white\/75 {
+  color: rgba(var(--text), 0.70) !important;
+}
+
+html.light .decoration-white\/20 {
+  text-decoration-color: rgba(var(--text), 0.15) !important;
+}
+
+html.light .underline.decoration-white\/20 {
+  text-decoration-color: rgba(var(--text), 0.15) !important;
+}
+
+/* ScrollProgress light mode glow adjustments */
+html.light [style*="rgba(74,210,255"] {
+  background: linear-gradient(
+    to bottom,
+    rgba(74, 210, 255, 0.0),
+    rgba(74, 210, 255, 0.35),
+    rgba(255, 87, 179, 0.28)
+  ) !important;
+}
+
+html.light [style*="box-shadow"][style*="74,210,255"] {
+  box-shadow:
+    0 0 12px rgba(74, 210, 255, 0.15),
+    0 0 18px rgba(255, 87, 179, 0.10) !important;
+}
+
+/* Hover states in light mode */
+html.light .hover\:text-white:hover {
+  color: rgb(var(--text)) !important;
+}
+
+html.light .group-hover\:text-white.group-hover\:text-white {
+  color: rgb(var(--text)) !important;
+}
+
+/* About section tech tags */
+html.light .bg-white\/5.text-white\/80 {
+  color: rgba(var(--text), 0.75) !important;
+  background-color: rgba(var(--text), 0.04) !important;
 }
