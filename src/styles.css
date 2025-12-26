@@ -170,9 +170,9 @@ body {
     transform: translate3d(0,0,0);
   }
 
-  .blob-1 { animation: drift1 10s ease-in-out infinite; }
-  .blob-2 { animation: drift2 14s ease-in-out infinite; }
-  .blob-3 { animation: drift3 18s ease-in-out infinite; }
+  .blob-1 { animation: drift1 6s ease-in-out infinite; }
+  .blob-2 { animation: drift2 10s ease-in-out infinite; }
+  .blob-3 { animation: drift3 14s ease-in-out infinite; }
 
   /* subtle grain */
   .grain {
@@ -216,4 +216,5 @@ body {
   .no-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
   }
+
 }
